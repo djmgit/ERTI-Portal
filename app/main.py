@@ -5,11 +5,16 @@ from flask_admin import Admin, BaseView, expose
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_cors import CORS
+from datetime import datetime
 import json
 import re
 import os
 
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(APP_ROOT, 'static/uploads')
+
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 if os.environ.get('DATABASE_URL') is None:
     #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///versions.sqlite3'
@@ -74,11 +79,40 @@ class Users(db.Model):
 
 db.create_all()
 
+@app.route('/admin')
+def admin():
+	return 'hello admin'
+
+@app.route('/admin/create', methods=('GET', 'POST'))
+def admin_create():
+	if request.method == 'POST':
+		title = request.form['title']
+		designation = request.form['description']
+		keywords = request.form['keywords']
+		total_no_stages = int(request.form['total_no_stages'])
+		stages = int(request.form['stages'])
+		current_no_stage = int(request.form['current_no_stages'])
+		status = int(request.form['status'])
+		document = request.files['document']
+
+		# generate a unique filename
+
+		extension = str(datetime.now)
+		extension = '-'.join(extension.split())
+		filename = '{}-{}'.format(document.filename, extension)
+		document.save(os.path.join(app.config['UPLOAD_FOLDER']), filename)
+
+		doc = Document(filename, title, description, keywords, total_no_stages, stages, current_no_stage, status)
+		db.session.add(doc)
+		db.session.commit()
+
+		return redirect(url_for('admin'))
+	else:
+		return 'create doc'
+
 @app.route('/')
 def index():
     return ('hellow world')
-
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
