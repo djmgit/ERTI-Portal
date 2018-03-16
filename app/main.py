@@ -110,6 +110,15 @@ def admin_create():
 	else:
 		return 'create doc'
 
+@app.route('/admin/edit/<int:doc_id>', method=('GET', 'POST'))
+def admin_edit(doc_id):
+	if request.method == 'GET':
+		document = Document.query.filter_by(id=doc_id).all()[0]
+		return 'documents'
+	else:
+		pass
+
+
 @app.route('/')
 def index():
     return ('hellow world')
