@@ -44,6 +44,34 @@ class Document(db.Model):
         self.current_no_stage = current_no_stage
         self.status = status
 
+class Users(db.Model):
+    __tablename__ = 'Users'
+
+    id = db.Column('user_id', db.Integer, primary_key=True)
+    email = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
+    password = db.Column(db.String)
+    designation = db.Column(db.String)
+
+    def __init__(self, email='', first_name='', last_name='', password='', designation=''):
+        self.email = email
+        self.first_name = first_name
+        self.last_name = last_name
+        self.password = password
+        self.designation = designation
+
+    def __repr__(self):
+        return '<User %r>' % self.email
+    def is_authenticated(self):
+        return True
+    def is_active(self):
+        return True
+    def is_anonymous(self):
+        return False
+    def get_id(self):
+        return str(self.email)
+
 @app.route('/')
 def index():
     return ('hellow world')
