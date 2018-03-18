@@ -63,6 +63,17 @@ body {font-size:16px;}
 		    	<br />
 		    	<span style="font-size: 12px;"> {{ doc.description}} </span>
 		    	<br />
+                <br />
+                {% set list1 = doc.stages.split(',') %}
+                {% set percent = (doc.current_no_stage/ doc.total_no_stages)*100 %}
+                <div class="w3-light-grey">
+                  <div class="w3-container w3-green w3-center" style="width:{{ percent }}%">{{ percent }}%</div>
+                </div>
+
+<span style="font-size: 12px;"> <b>Current status: </b>{{ list1[doc.current_no_stage] }}</span> <br />
+                <span style="font-size: 12px;"> <b>Comments: </b>{{ doc.status}} </span>
+                <br />
+                
 		    	<a href="/static/uploads/{{ doc.filename}} " class="w3-button w3-black">Download</a>
 		    </div>
 		    {% endfor %}
@@ -73,7 +84,7 @@ body {font-size:16px;}
     </div>
 
     <!-- W3.CSS Container -->
-    <div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px"><p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></p></div>
+    <div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px"><p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">INNOVATORS</a></p></div>
 
     <script>
 // Script to open and close sidebar

@@ -53,7 +53,7 @@ class Document(db.Model):
 class Notif(db.Model):
     __tablename__ = 'Notif'
 
-    id = db.Column('document_id', db.Integer, primary_key=True)
+    id = db.Column('notif_id', db.Integer, primary_key=True)
     name = db.Column(db.String)
     email = db.Column(db.String)
     phone = db.Column(db.String)
