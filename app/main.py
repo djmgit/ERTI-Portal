@@ -89,11 +89,11 @@ def admin_create():
         title = request.form['title']
         description = request.form['description']
         keywords = request.form['keywords']
-        total_no_stages = int(request.form['total_no_stages'])
         stages = request.form['stages']
-        current_no_stage = int(request.form['current_no_stages'])
+        current_no_stage = 0
         status = request.form['status']
         document = request.files['document']
+        total_no_stages = len(stages.split(","))
 
         print (request.form)
 
@@ -103,7 +103,7 @@ def admin_create():
         extension = '-'.join(extension.split())
         filename = '{}-{}'.format(document.filename, extension)
 
-        print (filename)
+        print (filenameg)
 
         document.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
