@@ -95,12 +95,17 @@ def admin_create():
         status = request.form['status']
         document = request.files['document']
 
+        print (request.form)
+
         # generate a unique filename
 
         extension = str(datetime.now)
         extension = '-'.join(extension.split())
         filename = '{}-{}'.format(document.filename, extension)
-        document.save(os.path.join(app.config['UPLOAD_FOLDER']), filename)
+
+        print (filename)
+
+        document.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         doc = Document(filename, title, description, keywords, total_no_stages, stages, current_no_stage, status)
         db.session.add(doc)
