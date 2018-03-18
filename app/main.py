@@ -50,20 +50,20 @@ class Document(db.Model):
         self.current_no_stage = current_no_stage
         self.status = status
 
-class Notif(db.Model):
-    __tablename__ = 'Notif'
+class Pending(db.Model):
+    __tablename__ = 'Pending'
 
-    id = db.Column('notif_id', db.Integer, primary_key=True)
+    id = db.Column('pending_id', db.Integer, primary_key=True)
     name = db.Column(db.String)
     email = db.Column(db.String)
     phone = db.Column(db.String)
-    query = db.Column(db.String)
+    search_query = db.Column(db.String)
 
-    def __init__(self, name='', email='', phone='', query=''):
+    def __init__(self, name='', email='', phone='', search_query=''):
         self.name = name
         self.email = email
         self.phone = phone
-        self.query = query
+        self.search_query = search_query
 
 class Users(db.Model):
     __tablename__ = 'Users'
@@ -182,9 +182,9 @@ def notify():
         name = request.form['name']
         email = request.form['email']
         phone = request.form['phone']
-        query = request.form['query']
+        search_query = request.form['query']
 
-        notif = Notif(name, email, phone, query)
+        notif = Pending(name, email, phone, search_query)
         db.session.add(notif)
         db.session.commit()
         return redirect(url_for('index'))
@@ -193,7 +193,8 @@ def notify():
 
 @app.route('/admin/pending')
 def pending():
-    pending = Notif.query.all()
+    pending = Pending.query.all()
+
     return render_template('pending.html', docs=pending)
 
 @app.route('/', methods=('GET', 'POST'))
