@@ -175,12 +175,14 @@ def index():
             description_tokens = [token.strip() for token in doc.description.split()]
             title_tokens = [token.strip() for token in doc.title.split()]
             doc_keywords = doc_keywords + description_tokens + title_tokens
+            doc_keywords = [k.lower() for k in doc_keywords]
             doc_keywords = set(doc_keywords)
             common = len(doc_keywords.intersection(set(query_tokens)))
             if common != 0:
                 user_docs.append({'doc': doc, 'score':common})
         user_docs.sort(key=lambda x:x['score'], reverse=True)
-        user_docs = [user_doc['soc'] for user_doc in user_docs]
+        user_docs = [user_doc['doc'] for user_doc in user_docs]
+        print (user_docs)
         return render_template('results.html', docs=user_docs)
     else:
         return render_template('index.html')
