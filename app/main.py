@@ -94,7 +94,7 @@ def admin_create():
         description = request.form['description']
         keywords = request.form['keywords']
         stages = request.form['stages']
-        current_no_stage = 0
+        current_no_stage = 1
         status = request.form['status']
         document = request.files['document']
         total_no_stages = len(stages.split(","))
