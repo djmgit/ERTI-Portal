@@ -160,6 +160,14 @@ def admin_edit(doc_id):
 
         db.session.commit()
 
+@app.route('/notify', methods=('GET', 'POST'))
+def notify():
+    if request.method == 'POST':
+        # store details
+        return redirect(url_for('index'))
+    else:
+        return render_template('notify.html')
+
 @app.route('/', methods=('GET', 'POST'))
 def index():
     if request.method == 'POST':
@@ -180,10 +188,13 @@ def index():
             common = len(doc_keywords.intersection(set(query_tokens)))
             if common != 0:
                 user_docs.append({'doc': doc, 'score':common})
-        user_docs.sort(key=lambda x:x['score'], reverse=True)
-        user_docs = [user_doc['doc'] for user_doc in user_docs]
-        print (user_docs)
-        return render_template('results.html', docs=user_docs)
+        if len(user_docs) != 0:
+            user_docs.sort(key=lambda x:x['score'], reverse=True)
+            user_docs = [user_doc['doc'] for user_doc in user_docs]
+            print (user_docs)
+            return render_template('results.html', docs=user_docs)
+        else:
+            return redirect(url_for('notify'))
     else:
         return render_template('index.html')
 
