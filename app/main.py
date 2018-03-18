@@ -146,7 +146,7 @@ def admin_edit(doc_id):
 
 @app.route('/', methods=('GET', 'POST'))
 def index():
-    if request.methid == 'POST':
+    if request.method == 'POST':
         query = request.form['query']
         query = query.lower()
         query_tokens = query.split()
