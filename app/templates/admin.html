@@ -22,10 +22,10 @@ body {font-size:16px;}
         <div class="w3-bar-block">
             <a href="/admin" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
             <a href="/admin/create" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Create Report</a> 
-            <a href="#services" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Services</a> 
+<!--             <a href="#services" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Services</a> 
             <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a> 
             <a href="#packages" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Packages</a> 
-            <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
+            <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a> -->
         </div>
     </nav>
 
@@ -64,9 +64,14 @@ body {font-size:16px;}
 		    	<span style="font-size: 12px;"> {{ doc.description}} </span>
 		    	<br />
 		    	{% set list1 = doc.stages.split(',') %}
-		    	{{ list1[doc.current_no_stage] }} <br />
-		    	<span style="font-size: 12px;"> {{ doc.status}} </span>
-		    	<br />
+                {% set percent = (doc.current_no_stage/ doc.total_no_stages)*100 %}
+                <div class="w3-light-grey">
+                  <div class="w3-container w3-green w3-center" style="width:{{ percent }}%">{{ percent }}%</div>
+                </div>
+
+<span style="font-size: 12px;"> <b>Current status: </b>{{ list1[doc.current_no_stage] }}</span> <br />
+                <span style="font-size: 12px;"> <b>Comments: </b>{{ doc.status}} </span>
+                <br />
 		    	<a href="/admin/edit/{{ doc.id}} " class="w3-button w3-black">Edit</a>
 		    </div>
 		    {% endfor %}

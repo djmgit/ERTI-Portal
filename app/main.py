@@ -127,17 +127,17 @@ def admin_create():
 def admin_edit(doc_id):
     if request.method == 'GET':
         document = Document.query.filter_by(id=doc_id).all()[0]
-        print (document[0].description)
+        # print (document[0].description)
         return render_template('admin-edit.html', docs=document)
     else:
         title = request.form['title']
         description = request.form['description']
         keywords = request.form['keywords']
-        total_no_stages = int(request.form['total_no_stages'])
-        stages = int(request.form['stages'])
-        current_no_stage = int(request.form['current_no_stages'])
-        status = int(request.form['status'])
-        document = request.files['document']
+        stages = request.form['stages']
+        current_no_stage = int(request.form['current_no_stage'])
+        status = request.form['status']
+        document = request.files.get('document')
+        total_no_stages = len(stages.split(","))
 
         doc = Document.query.filter_by(id=doc_id).all()[0]
         doc.title = title
@@ -157,8 +157,9 @@ def admin_edit(doc_id):
             os.unlink(os.path.join(app.config['UPLOAD_FOLDER'], doc.filename))
             document.save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
             doc.filename = new_filename
-
+        
         db.session.commit()
+        return redirect(url_for('admin'))
 
 @app.route('/notify', methods=('GET', 'POST'))
 def notify():

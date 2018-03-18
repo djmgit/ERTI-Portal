@@ -20,13 +20,13 @@ body {font-size:16px;}
             <h3 class="w3-padding-64"><b>E-RTI Portal</b></h3>
         </div>
         <div class="w3-bar-block">
-            <a href="/admin" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
-            <a href="/admin/create" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Create Report</a> 
-      <!--       <a href="#services" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Services</a> 
+            <a href="/" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
+            <a href="/notify" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Get notified</a> 
+<!--             <a href="#services" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Services</a> 
             <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a> 
             <a href="#packages" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Packages</a> 
-            <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
- -->        </div>
+            <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a> -->
+        </div>
     </nav>
 
     <!-- Top menu on small screens -->
@@ -54,42 +54,26 @@ body {font-size:16px;}
 
 
         <div class="w3-container" id="contact" style="margin-top:40px">
-            <h1 class="w3-xxxlarge w3-text-red"><b>Edit report</b></h1>
+            <h1 class="w3-xxxlarge w3-text-red"><b>Get Notified</b></h1>
             <hr style="width:50px;border:5px solid red" class="w3-round">
-            <form action="/admin/edit/{{docs.id}}" method="POST" enctype="multipart/form-data">
+            <form action="/admin/create" method="POST">
                 <div class="w3-section">
-                    <label>Title</label>
-                    <input class="w3-input w3-border" value="{{ docs.title }}" type="text" name="title" required>
+                    <label>Name</label>
+                    <input class="w3-input w3-border" type="text" name="name" required>
                 </div>
                 <div class="w3-section">
-                    <label>Description</label>
-                    <input class="w3-input w3-border" type="text" value="{{ docs.description }}" name="description" required>
+                    <label>Email</label>
+                    <input class="w3-input w3-border" type="text" name="email" required>
                 </div>
                 <div class="w3-section">
-                    <label>Stages of processing (Comma separated)</label>
-                    <input class="w3-input w3-border" type="text" value="{{ docs.stages }}" name="stages" required>
+                    <label>Phone No.</label>
+                    <input class="w3-input w3-border" type="text" name="phone" required>
                 </div>
                 <div class="w3-section">
-                    <label>Current stage (integer)</label>
-                    <input class="w3-input w3-border" type="integer" value="{{ docs.current_no_stage }}" name="current_no_stage" required>
+                    <label>Query / Requirement</label>
+                    <textarea row="10" col="20" class="w3-input w3-border" type="text" name="query" required></textarea>
                 </div>
-                <div class="w3-section">
-                    <label>Keywords</label>
-                    <input class="w3-input w3-border" type="text" value="{{ docs.keywords }}" name="keywords" required>
-                </div>
-                <div class="w3-section">
-                    <label>Status</label>
-                    <input class="w3-input w3-border" type="text" value="{{ docs.status }}" name="status" required>
-                </div>
-                <div class="w3-section">
-                    <label>File Upload</label>
-                    <input class="w3-input w3-border" type="file" name="document">
-                </div>
-                <div class="w3-section">
-                    <label>Files Uploaded</label><br />
-                    <a href="/static/uploads/{{docs.filename}}">{{docs.filename}}</a>
-                </div>
-                <button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Edit</button>
+                <button type="submit" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom">Create</button>
             </form>  
         </div>
 
