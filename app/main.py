@@ -148,9 +148,11 @@ def admin_edit(doc_id):
         doc.status = status
 
         if document:
-            extension = str(datetime.now)
+            fname = document.filename.split('.')[0]
+            fext = document.filename.split('.')[1]
+            extension = str(datetime.now())
             extension = '-'.join(extension.split())
-            new_filename = '{}-{}'.format(document.filename, extension)
+            new_filename = '{}-{}.{}'.format(fname, extension, fext)
             os.unlink(os.path.join(app.config['UPLOAD_FOLDER'], doc.filename))
             document.save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
             doc.filename = new_filename
