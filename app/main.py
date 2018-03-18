@@ -59,7 +59,7 @@ class Notif(db.Model):
     phone = db.Column(db.String)
     query = db.Column(db.String)
 
-    def __init__(self, name, email, phone, query):
+    def __init__(self, name='', email='', phone='', query=''):
         self.name = name
         self.email = email
         self.phone = phone
