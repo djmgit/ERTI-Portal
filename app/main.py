@@ -144,7 +144,7 @@ def admin_edit(doc_id):
 
         db.session.commit()
 
-@app.route('/')
+@app.route('/', methods=('GET', 'POST'))
 def index():
     if request.methid == 'POST':
         query = request.form['query']
