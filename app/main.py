@@ -191,6 +191,11 @@ def notify():
     else:
         return render_template('notify.html')
 
+@app.route('/admin/pending')
+def pending():
+    pending = Notif.query.all()
+    return render_template('pending.html', docs=pending)
+
 @app.route('/', methods=('GET', 'POST'))
 def index():
     if request.method == 'POST':
