@@ -161,9 +161,9 @@ def index():
                 user_docs.append({'doc': doc, 'score':common})
         user_docs.sort(key=lambda x:x['score'], reverse=True)
         user_docs = [user_doc['soc'] for user_doc in user_docs]
-        return ('index.html', docs=user_docs)
+        return render_template('index.html', docs=user_docs)
     else:
-        return 'hellow world'
+        return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
