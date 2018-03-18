@@ -85,6 +85,8 @@ def admin():
 
 @app.route('/admin/create', methods=('GET', 'POST'))
 def admin_create():
+    print (request)
+    print (request.method)
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
@@ -103,7 +105,7 @@ def admin_create():
         extension = '-'.join(extension.split())
         filename = '{}-{}'.format(document.filename, extension)
 
-        print (filenameg)
+        print (filename)
 
         document.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
