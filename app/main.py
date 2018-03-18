@@ -6,6 +6,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_cors import CORS
 from datetime import datetime
+from werkzeug.utils import secure_filename
 import json
 import re
 import os
@@ -81,7 +82,8 @@ db.create_all()
 
 @app.route('/admin')
 def admin():
-    return render_template('admin.html')
+    documents = Document.query.all()
+    return render_template('admin.html', docs=documents)
 
 @app.route('/admin/create', methods=('GET', 'POST'))
 def admin_create():
@@ -101,9 +103,13 @@ def admin_create():
 
         # generate a unique filename
 
-        extension = str(datetime.now)
+        print (document.filename)
+        fname = document.filename.split('.')[0]
+        fext = document.filename.split('.')[1]
+        print (fname, fext)
+        extension = str(datetime.now())
         extension = '-'.join(extension.split())
-        filename = '{}-{}'.format(document.filename, extension)
+        filename = '{}-{}.{}'.format(fname, extension, fext)
 
         print (filename)
 
