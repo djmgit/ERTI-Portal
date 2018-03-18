@@ -19,26 +19,7 @@ manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)
 
-class Prebirth(db.Model):
-    __tablename__ = 'Prebirth'
-
-    id = db.Column('artcile_id', db.Integer, primary_key=True)
-    month_no = db.Column(db.Integer)
-    title = db.Column(db.String)
-    article = db.Column(db.String)
-    dos = db.Column(db.String)
-    donts = db.Column(db.String)
-    diet = db.Column(db.String)
-
-    def __init__(self, month_no='', title='', article='', dos='', donts='', diet=''):
-        self.month_no = month_no
-        self.title = title
-        self.article = article
-        self.dos = dos
-        self.donts = donts
-        self.diet = diet
-
-
 
 if __name__ == '__main__':
     manager.run()
+    

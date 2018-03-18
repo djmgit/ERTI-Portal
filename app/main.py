@@ -81,42 +81,69 @@ db.create_all()
 
 @app.route('/admin')
 def admin():
-	return 'hello admin'
+    return 'hello admin'
 
 @app.route('/admin/create', methods=('GET', 'POST'))
 def admin_create():
-	if request.method == 'POST':
-		title = request.form['title']
-		designation = request.form['description']
-		keywords = request.form['keywords']
-		total_no_stages = int(request.form['total_no_stages'])
-		stages = int(request.form['stages'])
-		current_no_stage = int(request.form['current_no_stages'])
-		status = int(request.form['status'])
-		document = request.files['document']
+    if request.method == 'POST':
+        title = request.form['title']
+        designation = request.form['description']
+        keywords = request.form['keywords']
+        total_no_stages = int(request.form['total_no_stages'])
+        stages = int(request.form['stages'])
+        current_no_stage = int(request.form['current_no_stages'])
+        status = int(request.form['status'])
+        document = request.files['document']
 
-		# generate a unique filename
+        # generate a unique filename
 
-		extension = str(datetime.now)
-		extension = '-'.join(extension.split())
-		filename = '{}-{}'.format(document.filename, extension)
-		document.save(os.path.join(app.config['UPLOAD_FOLDER']), filename)
+        extension = str(datetime.now)
+        extension = '-'.join(extension.split())
+        filename = '{}-{}'.format(document.filename, extension)
+        document.save(os.path.join(app.config['UPLOAD_FOLDER']), filename)
 
-		doc = Document(filename, title, description, keywords, total_no_stages, stages, current_no_stage, status)
-		db.session.add(doc)
-		db.session.commit()
+        doc = Document(filename, title, description, keywords, total_no_stages, stages, current_no_stage, status)
+        db.session.add(doc)
+        db.session.commit()
 
-		return redirect(url_for('admin'))
-	else:
-		return 'create doc'
+        return redirect(url_for('admin'))
+    else:
+        return 'create doc'
 
-@app.route('/admin/edit/<int:doc_id>', method=('GET', 'POST'))
+@app.route('/admin/edit/<int:doc_id>', methods=('GET', 'POST'))
 def admin_edit(doc_id):
-	if request.method == 'GET':
-		document = Document.query.filter_by(id=doc_id).all()[0]
-		return 'documents'
-	else:
-		pass
+    if request.method == 'GET':
+        document = Document.query.filter_by(id=doc_id).all()[0]
+        return 'documents'
+    else:
+        title = request.form['title']
+        designation = request.form['description']
+        keywords = request.form['keywords']
+        total_no_stages = int(request.form['total_no_stages'])
+        stages = int(request.form['stages'])
+        current_no_stage = int(request.form['current_no_stages'])
+        status = int(request.form['status'])
+        document = request.files['document']
+
+        doc = Document.query.filter_by(id=doc_id).all()[0]
+        doc.title = title
+        doc.designation = designation
+        doc.keywords = keywords
+        doc.total_no_stages = total_no_stages
+        doc.stages = stages
+        doc.current_no_stage = current_no_stage
+        doc.status = status
+
+        if document:
+            extension = str(datetime.now)
+            extension = '-'.join(extension.split())
+            new_filename = '{}-{}'.format(document.filename, extension)
+            os.unlink(os.path.join(app.config['UPLOAD_FOLDER'], doc.filename))
+            document.save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
+            doc.filename = new_filename
+
+        db.session.commit()
+        
 
 
 @app.route('/')
