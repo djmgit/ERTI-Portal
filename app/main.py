@@ -179,7 +179,14 @@ def admin_edit(doc_id):
 @app.route('/notify', methods=('GET', 'POST'))
 def notify():
     if request.method == 'POST':
-        # store details
+        name = request.form['name']
+        email = request.form['email']
+        phone = request.form['phone']
+        query = request.form['query']
+
+        notif = Notif(name, email, phone, query)
+        db.session.add(notif)
+        db.session.commit()
         return redirect(url_for('index'))
     else:
         return render_template('notify.html')
