@@ -81,7 +81,7 @@ db.create_all()
 
 @app.route('/admin')
 def admin():
-    return 'hello admin'
+    return render_template('admin.html')
 
 @app.route('/admin/create', methods=('GET', 'POST'))
 def admin_create():
@@ -108,13 +108,13 @@ def admin_create():
 
         return redirect(url_for('admin'))
     else:
-        return 'create doc'
+        return render_template('admin-add.html')
 
 @app.route('/admin/edit/<int:doc_id>', methods=('GET', 'POST'))
 def admin_edit(doc_id):
     if request.method == 'GET':
         document = Document.query.filter_by(id=doc_id).all()[0]
-        return 'documents'
+        return render_template('admin-edit.html', docs=document)
     else:
         title = request.form['title']
         designation = request.form['description']
@@ -161,7 +161,7 @@ def index():
                 user_docs.append({'doc': doc, 'score':common})
         user_docs.sort(key=lambda x:x['score'], reverse=True)
         user_docs = [user_doc['soc'] for user_doc in user_docs]
-        return ('hellow world')
+        return ('index.html', docs=user_docs)
     else:
         return 'hellow world'
 
