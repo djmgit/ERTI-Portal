@@ -171,9 +171,9 @@ def index():
         
         for doc in docs:
             doc_keywords = doc.keywords.split(',')
-            doc_keywords = [doc_keyword.trim() for doc_keyword in doc_keywords]
-            description_tokens = [token.trim() for token in doc.description.split()]
-            title_tokens = [token.trim() for token in doc.title.split()]
+            doc_keywords = [doc_keyword.strip() for doc_keyword in doc_keywords]
+            description_tokens = [token.strip() for token in doc.description.split()]
+            title_tokens = [token.strip() for token in doc.title.split()]
             doc_keywords = doc_keywords + description_tokens + title_tokens
             doc_keywords = set(doc_keywords)
             common = len(doc_keywords.intersection(set(query_tokens)))
