@@ -90,9 +90,9 @@ def admin_create():
         designation = request.form['description']
         keywords = request.form['keywords']
         total_no_stages = int(request.form['total_no_stages'])
-        stages = int(request.form['stages'])
+        stages = request.form['stages']
         current_no_stage = int(request.form['current_no_stages'])
-        status = int(request.form['status'])
+        status = request.form['status']
         document = request.files['document']
 
         # generate a unique filename
