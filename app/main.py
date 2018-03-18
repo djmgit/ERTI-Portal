@@ -127,6 +127,7 @@ def admin_create():
 def admin_edit(doc_id):
     if request.method == 'GET':
         document = Document.query.filter_by(id=doc_id).all()[0]
+        print (document[0].description)
         return render_template('admin-edit.html', docs=document)
     else:
         title = request.form['title']
