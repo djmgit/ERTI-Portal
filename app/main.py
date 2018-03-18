@@ -50,6 +50,21 @@ class Document(db.Model):
         self.current_no_stage = current_no_stage
         self.status = status
 
+class Notif(db.Model):
+    __tablename__ = 'Notif'
+
+    id = db.Column('document_id', db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    email = db.Column(db.String)
+    phone = db.Column(db.String)
+    query = db.Column(db.String)
+
+    def __init__(self, name, email, phone, query):
+        self.name = name
+        self.email = email
+        self.phone = phone
+        self.query = query
+
 class Users(db.Model):
     __tablename__ = 'Users'
 
