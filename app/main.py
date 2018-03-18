@@ -143,12 +143,27 @@ def admin_edit(doc_id):
             doc.filename = new_filename
 
         db.session.commit()
-        
-
 
 @app.route('/')
 def index():
-    return ('hellow world')
+    if request.methid == 'POST':
+        query = request.form['query']
+        query = query.lower()
+        query_tokens = query.split()
+        docs = Document.query.all()
+        user_docs = []
+        
+        for doc in docs:
+            doc_keywords = doc.keywords.split(',')
+            doc_keywords = set([doc_keyword.trim() for doc_keyword in doc_keywords])
+            common = len(doc_keywords.intersection(set(query_tokens)))
+            if common != 0:
+                user_docs.append({'doc': doc, 'score':common})
+        user_docs.sort(key=lambda x:x['score'], reverse=True)
+        user_docs = [user_doc['soc'] for user_doc in user_docs]
+        return ('hellow world')
+    else:
+        return 'hellow world'
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
