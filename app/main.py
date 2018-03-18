@@ -87,7 +87,7 @@ def admin():
 def admin_create():
     if request.method == 'POST':
         title = request.form['title']
-        designation = request.form['description']
+        description = request.form['description']
         keywords = request.form['keywords']
         total_no_stages = int(request.form['total_no_stages'])
         stages = request.form['stages']
@@ -108,7 +108,7 @@ def admin_create():
 
         return redirect(url_for('admin'))
     else:
-        return render_template('admin-add.html')
+        return render_template('admin-create.html')
 
 @app.route('/admin/edit/<int:doc_id>', methods=('GET', 'POST'))
 def admin_edit(doc_id):
@@ -117,7 +117,7 @@ def admin_edit(doc_id):
         return render_template('admin-edit.html', docs=document)
     else:
         title = request.form['title']
-        designation = request.form['description']
+        description = request.form['description']
         keywords = request.form['keywords']
         total_no_stages = int(request.form['total_no_stages'])
         stages = int(request.form['stages'])
@@ -127,7 +127,7 @@ def admin_edit(doc_id):
 
         doc = Document.query.filter_by(id=doc_id).all()[0]
         doc.title = title
-        doc.designation = designation
+        doc.description = description
         doc.keywords = keywords
         doc.total_no_stages = total_no_stages
         doc.stages = stages
